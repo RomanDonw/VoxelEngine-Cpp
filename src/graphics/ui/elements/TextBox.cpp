@@ -868,6 +868,10 @@ void TextBox::performEditingKeyboardEvents(Keycode key) {
         onUpPressed();
     } else if (key == Keycode::DOWN && onDownPressed) {
         onDownPressed();
+    } else if (key == Keycode::HOME) {
+        setCaret(getLinePos(getLineAt(getCaret())));
+    } else if (key == Keycode::END && getLineLength(getLineAt(getCaret())) > 0) {
+        setCaret(getLinePos(getLineAt(getCaret())) + getLineLength(getLineAt(getCaret())) - 1);
     }
 }
 
