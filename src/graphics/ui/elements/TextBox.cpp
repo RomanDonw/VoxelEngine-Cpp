@@ -832,9 +832,7 @@ void TextBox::performEditingKeyboardEvents(Keycode key) {
 
     uint current_line = getLineAt(getCaret());
     uint previousCaret = getCaret();
-    //size_t current_line_startpos = getLinePos(current_line);
-    //size_t current_line_endpos = current_line_startpos + getLineLength(current_line) - 1;
-
+    
     if (key == Keycode::BACKSPACE) {
         if (!eraseSelected() && caret > 0 && input.length() > 0) {
             if (caret > input.length()) {
