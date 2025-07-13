@@ -874,9 +874,9 @@ void TextBox::performEditingKeyboardEvents(Keycode key) {
         onDownPressed();
     } else if (key == Keycode::HOME) {
         setCaret(getLinePos(current_line));
-	resetMaxLocalCaret();
+        resetMaxLocalCaret();
 
-	if (shiftPressed) {
+        if (shiftPressed) {
             if (selectionStart == selectionEnd) {
                 selectionOrigin = previousCaret;
             }
@@ -886,9 +886,9 @@ void TextBox::performEditingKeyboardEvents(Keycode key) {
         }
     } else if (key == Keycode::END && getLineLength(current_line) > 0) {
         setCaret(getLinePos(current_line) + getLineLength(current_line) - 1);
-	resetMaxLocalCaret();
+        resetMaxLocalCaret();
 	
-	if (shiftPressed) {
+        if (shiftPressed) {
             if (selectionStart == selectionEnd) {
                 selectionOrigin = previousCaret;
             }
