@@ -834,7 +834,12 @@ void TextBox::performEditingKeyboardEvents(Keycode key) {
     uint previousCaret = getCaret();
     
     if (key == Keycode::BACKSPACE) {
-        if (!eraseSelected() && caret > 0 && input.length() > 0) {
+        bool erased = eraseSelected();
+        if (erased) {
+            if (validate()) {
+                onInput();
+            }
+        } else if (caret > 0 && input.length() > 0) {
             if (caret > input.length()) {
                 caret = input.length();
             }
