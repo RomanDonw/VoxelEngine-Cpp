@@ -831,8 +831,9 @@ void TextBox::performEditingKeyboardEvents(Keycode key) {
     bool breakSelection = getSelectionLength() != 0 && !shiftPressed;
 
     uint current_line = getLineAt(getCaret());
-    size_t current_line_startpos = getLinePos(current_line);
-    size_t current_line_endpos = current_line_startpos + getLineLength(current_line) - 1;
+    uint previousCaret = getCaret();
+    //size_t current_line_startpos = getLinePos(current_line);
+    //size_t current_line_endpos = current_line_startpos + getLineLength(current_line) - 1;
 
     if (key == Keycode::BACKSPACE) {
         if (!eraseSelected() && caret > 0 && input.length() > 0) {
@@ -874,9 +875,29 @@ void TextBox::performEditingKeyboardEvents(Keycode key) {
     } else if (key == Keycode::DOWN && onDownPressed) {
         onDownPressed();
     } else if (key == Keycode::HOME) {
-        setCaret(current_line_startpos);
+        setCaret(getLinePos(current_line));
+	resetMaxLocalCaret();
+
+	if (shiftPressed) {
+            if (selectionStart == selectionEnd) {
+                selectionOrigin = previousCaret;
+            }
+            extendSelection(getCaret());
+        } else {
+            resetSelection();
+        }
     } else if (key == Keycode::END && getLineLength(current_line) > 0) {
-        setCaret(current_line_endpos);
+        setCaret(getLinePos(current_line) + getLineLength(current_line) - 1);
+	resetMaxLocalCaret();
+	
+	if (shiftPressed) {
+            if (selectionStart == selectionEnd) {
+                selectionOrigin = previousCaret;
+            }
+            extendSelection(getCaret());
+        } else {
+            resetSelection();
+        }
     }
 }
 
